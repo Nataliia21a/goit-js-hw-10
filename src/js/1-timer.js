@@ -13,6 +13,7 @@ const refs = {
   dataSeconds: document.querySelector('[data-seconds]'),
 };
 let isActive = false;
+refs.btnStart.disabled = true;
 let userSelectedDate = null;
 let intervalId = null;
 
@@ -28,15 +29,22 @@ const options = {
         title: 'Error',
         message: '"Please choose a date in the future"',
       });
+      refs.btnStart.disabled = true;
+    } else {
+      refs.btnStart.disabled = false;
     }
   },
 };
+
 flatpickr(refs.dateTimePicker, options);
+
 function onBtnStartClick() {
-  if (isActive) {
-    return;
-  }
-  isActive = true;
+  // if (isActive) {
+  //   return;
+  // }
+  // isActive = true;
+  refs.btnStart.disabled = true;
+  refs.dateTimePicker.disabled = true;
   const userDateMs = userSelectedDate.getTime();
   intervalId = setInterval(() => {
     const currentTime = Date.now();
@@ -45,10 +53,14 @@ function onBtnStartClick() {
     if (ms <= 0) {
       clearInterval(intervalId);
       time = convertMs(0);
+      // isActive = false;
+      refs.btnStart.disabled = false;
+      refs.dateTimePicker.disabled = false;
     }
     updateClockface(time);
   }, 1000);
 }
+
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;

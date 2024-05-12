@@ -32,6 +32,12 @@ button {
 button:hover {
   background: #6c8cff;
 }
+#datetime-picker:disabled,
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 #datetime-picker {
   width: 272px;
   height: 40px;
